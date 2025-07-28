@@ -1,19 +1,19 @@
 import pandas as pd
 
-# Load your Excel file
+# Load your Excel file without assuming the first row as header
 file_path = "Marks.xlsx"  # Ensure this file is in the same directory
 xls = pd.ExcelFile(file_path)
 
-# Load the first sheet
-df = xls.parse(xls.sheet_names[0])
+# Load the first sheet with no header so we get all rows including the first
+df = pd.read_excel(file_path, sheet_name=xls.sheet_names[0], header=None)
 
-# Rename columns
+# Rename columns manually
 df.columns = ['Subject Code', 'Subject Name', 'Grade']
 
 # Add Serial Number (S.N.)
 df.insert(0, 'S.N.', range(1, len(df) + 1))
 
-# Print the full subject list
+# Print full subject list
 print("=== Subject List ===")
 print(df.to_string(index=False))
 
